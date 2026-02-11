@@ -1,0 +1,97 @@
+devices:
+  r01c01-pe01:
+    image: /home/cisco/images/8000-eft15.1/packages/images/8000/xr7/25.1.2/8000-x64-25.1.2.iso
+    cvac: config-v6-only/r01c01-pe01.cfg
+    platform: spitfire_f
+    linecard_types: [8711-32FH-M]
+
+  r01c01-pe02:
+    image: /home/cisco/images/8000-eft15.1/packages/images/8000/xr7/25.1.2/8000-x64-25.1.2.iso
+    cvac: config-v6-only/r01c01-pe02.cfg
+    platform: spitfire_f
+    linecard_types: [8711-32FH-M]
+
+  r02c02-pe01:
+    image: /home/cisco/images/8000-eft15.1/packages/images/8000/xr7/25.1.2/8000-x64-25.1.2.iso
+    cvac: config-v6-only/r02c02-pe01.cfg
+    platform: spitfire_f
+    linecard_types: [8711-32FH-M]
+    
+  r02c03-pe02:
+    image: /home/cisco/images/8000-eft15.1/packages/images/8000/xr7/25.1.2/8000-x64-25.1.2.iso
+    cvac: config-v6-only/r02c03-pe02.cfg
+    platform: spitfire_f
+    linecard_types: [8711-32FH-M]
+    
+  r02c03-pe03:
+    image: /home/cisco/images/8000-eft15.1/packages/images/8000/xr7/25.1.2/8000-x64-25.1.2.iso
+    cvac: config-v6-only/r02c03-pe03.cfg
+    platform: spitfire_f
+    linecard_types: [8711-32FH-M]
+    
+  r02c03-pe04:
+    image: /home/cisco/images/8000-eft15.1/packages/images/8000/xr7/25.1.2/8000-x64-25.1.2.iso
+    cvac: config-v6-only/r02c03-pe04.cfg
+    platform: spitfire_f
+    linecard_types: [8711-32FH-M]
+
+connections:
+  hubs:
+    r01c01-pe01-r01c01-pe02:         
+      - r01c01-pe01.FourHundredGigE0/0/0/0
+      - r01c01-pe02.FourHundredGigE0/0/0/0
+
+    r01c01-pe01-r02c02-pe01:         
+      - r01c01-pe01.FourHundredGigE0/0/0/1
+      - r02c02-pe01.FourHundredGigE0/0/0/0
+
+
+    r01c01-pe02-r02c02-pe01:         
+      - r01c01-pe02.FourHundredGigE0/0/0/1
+      - r02c02-pe01.FourHundredGigE0/0/0/3
+    
+    r01c01-pe02-r02c03-pe02:         
+      - r01c01-pe02.FourHundredGigE0/0/0/2
+      - r02c03-pe02.FourHundredGigE0/0/0/3
+
+
+    r02c02-pe01-r02c03-pe03:         
+      - r02c02-pe01.FourHundredGigE0/0/0/1
+      - r02c03-pe03.FourHundredGigE0/0/0/0
+
+    r02c02-pe01-r02c03-pe02:         
+      - r02c02-pe01.FourHundredGigE0/0/0/2
+      - r02c03-pe02.FourHundredGigE0/0/0/0
+
+
+    r02c03-pe02-r02c03-pe03:         
+      - r02c03-pe02.FourHundredGigE0/0/0/1
+      - r02c03-pe03.FourHundredGigE0/0/0/2
+
+    r02c03-pe02-r02c03-pe04:         
+      - r02c03-pe02.FourHundredGigE0/0/0/2
+      - r02c03-pe04.FourHundredGigE0/0/0/1
+
+
+    r02c03-pe03-r02c03-pe04:         
+      - r02c03-pe03.FourHundredGigE0/0/0/1
+      - r02c03-pe04.FourHundredGigE0/0/0/0
+
+
+  custom:
+
+    ce01br1:
+      ports: [r01c01-pe01.FourHundredGigE0/0/0/2]
+      linux_bridge: ce01br1
+
+    ce01br2:
+      ports: [r01c01-pe02.FourHundredGigE0/0/0/3]
+      linux_bridge: ce01br2
+
+    ce02br1:
+      ports: [r02c03-pe03.FourHundredGigE0/0/0/3]
+      linux_bridge: ce02br1
+
+    ce02br2:
+      ports: [r02c03-pe04.FourHundredGigE0/0/0/2]
+      linux_bridge: ce02br2

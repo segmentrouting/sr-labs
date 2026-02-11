@@ -1,0 +1,78 @@
+# Containerlab topology file for srfa
+
+name: srfa
+
+mgmt:
+  network: mgt-net
+  ipv4-subnet: 172.20.1.0/24
+  
+topology:
+  nodes:
+
+    ce01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      startup-config: config/ce01.cfg
+      mgmt-ipv4: 172.20.1.107
+
+    ce02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      startup-config: config/ce02.cfg
+      mgmt-ipv4: 172.20.1.108
+
+    r01c01-pe01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      startup-config: config/r01c01-pe01.cfg
+      mgmt-ipv4: 172.20.1.109
+
+    r01c01-pe02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      startup-config: config/r01c01-pe02.cfg
+      mgmt-ipv4: 172.20.1.110
+
+    r02c02-pe01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      startup-config: config/r02c02-pe01.cfg
+      mgmt-ipv4: 172.20.1.111
+
+    r02c03-pe03:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      startup-config: config/r02c03-pe03.cfg
+      mgmt-ipv4: 172.20.1.112
+
+    r02c03-pe04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      startup-config: config/r02c03-pe04.cfg
+      mgmt-ipv4: 172.20.1.113
+
+
+  links:
+
+    - endpoints: ["r01c01-pe01:Gi0-0-0-0", "r01c01-pe02:Gi0-0-0-0"]
+    - endpoints: ["r01c01-pe01:Gi0-0-0-1", "r02c02-pe01:Gi0-0-0-0"]
+
+    - endpoints: ["r01c01-pe02:Gi0-0-0-1", "r02c02-pe01:Gi0-0-0-3"]
+
+    - endpoints: ["r02c02-pe01:Gi0-0-0-1", "r02c03-pe03:Gi0-0-0-0"]
+    - endpoints: ["r02c02-pe01:Gi0-0-0-2", "r02c03-pe02:Gi0-0-0-0"]
+
+    - endpoints: ["r02c03-pe02:Gi0-0-0-1", "r02c03-pe03:Gi0-0-0-2"]
+    - endpoints: ["r02c03-pe02:Gi0-0-0-2", "r02c03-pe04:Gi0-0-0-1"]
+
+    - endpoints: ["r02c03-pe03:Gi0-0-0-1", "r02c03-pe04:Gi0-0-0-0"]
+
+    - endpoints: ["ce01:Gi0-0-0-0", "r01c01-pe01:Gi0-0-0-2"]
+    - endpoints: ["ce01:Gi0-0-0-1", "r01c01-pe02:Gi0-0-0-3"]
+
+    - endpoints: ["ce02:Gi0-0-0-0", "r02c03-pe03:Gi0-0-0-3"]
+    - endpoints: ["ce02:Gi0-0-0-1", "r02c03-pe04:Gi0-0-0-2"]
+
+
+
+
