@@ -1,0 +1,39 @@
+name: c8kv2node
+
+mgmt: 
+  network: c8kv2node-mgmt
+  ipv4-subnet: 10.101.1.0/24
+
+topology: 
+  nodes: 
+    r1:
+      kind: cisco_c8000v
+      image: vrnetlab/cisco_c8000v:17.12.04b 
+      mgmt-ipv4: 10.101.1.101
+      startup-config: r1.cfg
+    r2:
+      kind: cisco_c8000v
+      image: vrnetlab/cisco_c8000v:17.12.04b
+      mgmt-ipv4: 10.101.1.102
+      startup-config: r2.cfg
+    a1:
+      kind: linux
+      image: alpine:latest
+      mgmt-ipv4: 10.101.1.103
+      binds:
+        - a1.sh:/config.sh
+      exec:
+        - /bin/sh /config.sh
+    b1:
+      kind: linux
+      image: alpine:latest
+      mgmt-ipv4: 10.101.1.104
+      binds: 
+        - b1.sh:/config.sh
+      exec: 
+        - /bin/sh /config.sh
+  
+  links: 
+    - endpoints: ["r1:Gi2", "r2:Gi2"]
+    - endpoints: ["r1:Gi3", "a1:eth1"]
+    - endpoints: ["r2:Gi3", "b1:eth1"]
