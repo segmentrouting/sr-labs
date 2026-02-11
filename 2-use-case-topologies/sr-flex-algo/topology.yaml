@@ -39,17 +39,23 @@ topology:
       startup-config: config/r02c02-pe01.cfg
       mgmt-ipv4: 172.20.1.111
 
+    r02c03-pe02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      startup-config: config/r02c03-pe02.cfg
+      mgmt-ipv4: 172.20.1.112
+
     r02c03-pe03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.4.1
       startup-config: config/r02c03-pe03.cfg
-      mgmt-ipv4: 172.20.1.112
+      mgmt-ipv4: 172.20.1.113
 
     r02c03-pe04:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.4.1
       startup-config: config/r02c03-pe04.cfg
-      mgmt-ipv4: 172.20.1.113
+      mgmt-ipv4: 172.20.1.114
 
 
   links:
